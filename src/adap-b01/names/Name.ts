@@ -1,3 +1,5 @@
+import { test } from "vitest";
+
 export class Name {
 
     public readonly DEFAULT_DELIMITER: string = '.';
@@ -7,7 +9,11 @@ export class Name {
     private delimiter: string = this.DEFAULT_DELIMITER;
 
     constructor(other: string[], delimiter?: string) {
-        throw new Error("needs implementation");
+        this.components = other;
+        if(delimiter != null){
+            this.delimiter = delimiter;
+        }
+        //throw new Error("needs implementation");
     }
 
     /** Returns human-readable representation of Name instance */
@@ -16,27 +22,42 @@ export class Name {
     }
 
     public getComponent(i: number): string {
-        throw new Error("needs implementation");
+        if(i > -1 && i < this.components.length){
+        return this.components[i];
+
+        }
+    
+        throw new Error("invalid index");
+        
     }
 
     public setComponent(i: number, c: string): void {
-        throw new Error("needs implementation");
+        if(i > -1 && i < this.components.length){
+            this.components[i] = c;
+        }
+        //throw new Error("invalid index");
     }
 
     public getNoComponents(): number {
+        return this.components.length;
         throw new Error("needs implementation");
     }
 
     public insert(i: number, c: string): void {
-        throw new Error("needs implementation");
+        this.components[i] = c;
+        //throw new Error("needs implementation");
     }
 
     public append(c: string): void {
+        this.components.push(c);
         throw new Error("needs implementation");
     }
 
     public remove(i: number): void {
-        throw new Error("needs implementation");
+        if(i > -1 && i < this.components.length){
+            this.components[i] = "";
+        }
+        throw new Error("invalid index");
     }
 
 }
