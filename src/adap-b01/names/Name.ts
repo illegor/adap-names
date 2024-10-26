@@ -55,9 +55,13 @@ export class Name {
         }
         throw new Error("invalid index"); //falls Index ungültig --> Es kann nichts geändert werden
     }
+
+
     /** @methodtype get-method */
+    /** Returns number of components in Name instance */
     public getNoComponents(): number {
-        return this.components.length;
+        throw new Error("needs implementation");
+
     }
 
     public insert(i: number, c: string): void {
