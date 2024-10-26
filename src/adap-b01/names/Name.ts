@@ -60,11 +60,12 @@ export class Name {
     /** @methodtype get-method */
     /** Returns number of components in Name instance */
     public getNoComponents(): number {
-        throw new Error("needs implementation");
+        return this.components.length
 
     }
 
     public insert(i: number, c: string): void {
+        if(i < 0 || i > this.getNoComponents()) return
         let first = this.components.slice(0, i) //c soll an Stelle i hinzugefügt werden --> Components bis i erstmal kopieren
         first.push(c); //c an Stelle i hinzufügen
         this.components = first.concat(this.components.slice(i, this.getNoComponents())); //rest der Components hinzufügen
