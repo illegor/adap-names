@@ -154,7 +154,7 @@ export class StringName implements Name {
 
         }
         this.length--;
-        console.log(this.name);
+        
     }
 
     public concat(other: Name): void {
