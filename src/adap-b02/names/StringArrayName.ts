@@ -6,7 +6,9 @@ export class StringArrayName implements Name {
     protected delimiter: string = DEFAULT_DELIMITER;
 
     constructor(other: string[], delimiter?: string) {
-        this.components = other; //falls leer, egal, Fehlerbehandlung in jeweiligen Methoden
+        if(other.length > 0 && other[0]!= ""){
+        this.components = other; 
+        }
         if(delimiter != null){
             this.delimiter = delimiter;
         }
@@ -29,7 +31,7 @@ export class StringArrayName implements Name {
     }
 
     public asDataString(): string {
-        throw new Error("needs implementation");
+        return this.asString();
     }
 
     public isEmpty(): boolean {
@@ -55,6 +57,7 @@ export class StringArrayName implements Name {
     }
 
     public setComponent(i: number, c: string): void {
+
         if(i > -1 && i < this.getNoComponents()){ //nur gültige Indizes können auch geändert werden
             this.components[i] = c; //Component ändern
         }
@@ -82,9 +85,12 @@ export class StringArrayName implements Name {
     }
 
     public concat(other: Name): void {
+        if(other.isEmpty())return;
+        if(other.getDelimiterCharacter() == this.getDelimiterCharacter()){
         for(let i = 0; i < other.getNoComponents(); i++){
             this.append(other.getComponent(i));
         }
+    }
         //throw new Error("needs implementation");
     }
 
