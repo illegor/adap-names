@@ -6,13 +6,8 @@ export class Coordinate {
     constructor(x?: number, y?: number) {
         this.initialize(x, y);
     }
-<<<<<<< HEAD
-    /** @methodtype get-method */
-    public static getOrigin(): Coordinate {
-=======
 
     public static createOrigin(): Coordinate {
->>>>>>> 3666921a324624d7ef8f36ed2af2dd2ba1b92eb3
         return new Coordinate(0, 0);
     }
     /** @methodtype initialization-method */
