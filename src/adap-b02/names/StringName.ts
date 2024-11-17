@@ -31,7 +31,7 @@ export class StringName implements Name {
     }
 
     public asDataString(): string {
-        throw new Error("needs implementation");
+        return this.name;
     }
 
     public isEmpty(): boolean {
