@@ -24,7 +24,7 @@ export abstract class AbstractName implements Name {
     }
 
     public toString(): string {
-        throw new Error("needs implementation");
+        return this.asDataString();
     }
 
     public asDataString(): string {
@@ -46,7 +46,15 @@ export abstract class AbstractName implements Name {
     }
 
     public getHashCode(): number {
-        throw new Error("needs implementation");
+        let hashCode: number = 0;
+        const s: string = this.asDataString();
+        for (let i = 0; i < s.length; i++) {
+            let c = s.charCodeAt(i);
+            hashCode = (hashCode << 5) - hashCode + c;
+            hashCode |= 0;
+        }
+        return hashCode;
+        //throw new Error("needs implementation");
     }
 
     public clone(): Name {
