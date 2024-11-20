@@ -1,13 +1,14 @@
-import { Name, DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "./Name";
+import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
+import { Name } from "./Name";
 
 export class StringArrayName implements Name {
 
-    protected components: string[] = [];
     protected delimiter: string = DEFAULT_DELIMITER;
+    protected components: string[] = [];
 
     constructor(other: string[], delimiter?: string) {
         if(other.length > 0 && other[0]!= ""){
-        this.components = other; 
+            this.components = other;
         }
         if(delimiter != null){
             this.delimiter = delimiter;
@@ -23,10 +24,10 @@ export class StringArrayName implements Name {
         for(let i = 0; i < this.getNoComponents()-1; i++){ //nur bis ...-1, um am Ende keinen überflüssigen delimiter zu haben
             res += this.components[i];
             res += delimiter;
-            
-            }
+
+        }
         res += this.components[this.getNoComponents()-1]; //letztes Part hinzufügen
-            
+
         return res;
     }
 
@@ -47,12 +48,12 @@ export class StringArrayName implements Name {
     }
 
     public getComponent(i: number): string {
-        
+
         if(i > -1 && i < this.getNoComponents()){ //nur gültige Indizes erlauben
             return this.components[i]; //component zurückgeben
-    
+
             }
-        
+
             throw new Error("invalid index"); //falls Index ungültig --> Es kann nichts ausgegeben werden
     }
 
@@ -69,7 +70,7 @@ export class StringArrayName implements Name {
         let first = this.components.slice(0, i) //c soll an Stelle i hinzugefügt werden --> Components bis i erstmal kopieren
         first.push(c); //c an Stelle i hinzufügen
         this.components = first.concat(this.components.slice(i, this.getNoComponents())); //rest der Components hinzufügen
-        
+
     }
 
     public append(c: string): void {
@@ -77,7 +78,7 @@ export class StringArrayName implements Name {
     }
 
     public remove(i: number): void {
-        if(i > -1 && i < this.getNoComponents()){ 
+        if(i > -1 && i < this.getNoComponents()){
             let first = this.components.slice(0, i) //Component an Stelle i soll entfernt werden --> Components bis i erstmal kopieren
             this.components = first.concat(this.components.slice(i+1, this.getNoComponents())); //i überspringen und Rest kopieren
             }

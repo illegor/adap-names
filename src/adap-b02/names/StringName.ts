@@ -1,14 +1,14 @@
-import { Name, DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "./Name";
+import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
+import { Name } from "./Name";
 
 export class StringName implements Name {
 
     protected delimiter: string = DEFAULT_DELIMITER;
-
-    protected name: string= "";
-    protected length: number = 0;
+    protected name: string = "";
+    protected noComponents: number = 0;
 
     constructor(other: string, delimiter?: string) {
-        this.length = 0;
+        this.noComponents = 0;
         if(delimiter != null){
             this.delimiter = delimiter;
         }
@@ -16,12 +16,12 @@ export class StringName implements Name {
             this.delimiter = DEFAULT_DELIMITER; //Default, falls kein Delimiter mitgegeben, da optional
         }
         if(other != ""){
-            this.name = other; 
-            
-            this.length = this.getNoComponents();
+            this.name = other;
+
+            this.noComponents = this.getNoComponents();
             }
-        
-        
+
+
     }
 
     public asString(delimiter: string = this.delimiter): string {
@@ -48,7 +48,7 @@ export class StringName implements Name {
         let j = 0;
         while(j < this.name.length){
             if(this.name.charAt(j) == this.getDelimiterCharacter()){
-               i++; 
+               i++;
             }
             j++;
 
@@ -58,7 +58,7 @@ export class StringName implements Name {
 
     public getComponent(x: number): string {
         let sol = ""
-        if(x > this.length || x<0) {return sol};
+        if(x > this.getNoComponents() || x<0) {return sol};
         let i = 0;
         let j = 0;
         while(i < x){
@@ -84,15 +84,15 @@ export class StringName implements Name {
     }
 
     public setComponent(n: number, c: string): void {
-        if(n > this.length || n<0) {return};
+        if(n > this.getNoComponents() || n<0) {return};
         this.remove(n);
         this.insert(n, c);
-        
+
     }
 
     public insert(n: number, c: string): void {
-        if(n > this.length || n<0) {return};
-        if(n == this.length){
+        if(n > this.getNoComponents() || n<0) {return};
+        if(n == this.getNoComponents()){
             this.append(c);
             return;
         }
@@ -109,19 +109,19 @@ export class StringName implements Name {
         let firstPart = this.name.substr(0, j);
         let lastPart = this.name.substr(j);
         this.name = firstPart+c+ this.getDelimiterCharacter() +lastPart;
-        this.length++;
+        this.noComponents++;
     }
 
     public append(c: string): void {
         this.name += this.getDelimiterCharacter();
         this.name += c;
-        this.length++;
+        this.noComponents++;
         //throw new Error("needs implementation");
     }
 
     public remove(n: number): void {
 
-        if(n > this.length || n<0) {return};
+        if(n > this.getNoComponents() || n<0) {return};
         let i = 0;
         let j = 0;
         while(i < n){
@@ -140,21 +140,21 @@ export class StringName implements Name {
         j++;
 
     }
-        
-        
-        
+
+
+
         if(j < this.name.length){
         let lastPart = this.name.substr(j);
         this.name = firstPart+lastPart;
         }
         else this.name = firstPart;
-        if(n == this.length-1){
+        if(n == this.getNoComponents()-1){
             let newname = this.name.substring(0, this.name.length-1);
             this.name = newname;
 
         }
-        this.length--;
-        
+        this.getNoComponents();
+
     }
 
     public concat(other: Name): void {
