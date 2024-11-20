@@ -1,6 +1,7 @@
 import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
 import { Name } from "./Name";
 import { AbstractName } from "./AbstractName";
+import {IllegalArgumentException} from "../common/IllegalArgumentException";
 
 export class StringArrayName extends AbstractName {
 
@@ -8,66 +9,92 @@ export class StringArrayName extends AbstractName {
 
     constructor(other: string[], delimiter?: string) {
         super();
-        throw new Error("needs implementation");
+        super();
+        if(other.length > 0 && other[0]!= ""){
+            this.components = other;
+        }
+        else{
+            throw new IllegalArgumentException("invalid other")
+        }
+
     }
 
     public clone(): Name {
-        throw new Error("needs implementation");
+        return super.clone();
     }
 
     public asString(delimiter: string = this.delimiter): string {
-        throw new Error("needs implementation");
+       return super.asString(delimiter);
     }
 
     public toString(): string {
-        throw new Error("needs implementation");
+        return super.toString();
     }
 
     public asDataString(): string {
-        throw new Error("needs implementation");
+        return super.asDataString();
     }
 
     public isEqual(other: Name): boolean {
-        throw new Error("needs implementation");
+        return super.isEqual(other);
     }
 
     public getHashCode(): number {
-        throw new Error("needs implementation");
+        return super.getHashCode();
     }
 
     public isEmpty(): boolean {
-        throw new Error("needs implementation");
+        return super.isEmpty();
     }
 
     public getDelimiterCharacter(): string {
-        throw new Error("needs implementation");
+        return super.getDelimiterCharacter();
     }
 
     public getNoComponents(): number {
-        throw new Error("needs implementation");
+        return this.components.length
     }
 
     public getComponent(i: number): string {
-        throw new Error("needs implementation");
+        if(i > -1 && i < this.getNoComponents()){ //nur gültige Indizes erlauben
+            return this.components[i]; //component zurückgeben
+
+        }
+        else throw new IllegalArgumentException("invalid index"); //falls Index ungültig --> Es kann nichts ausgegeben werden
     }
 
     public setComponent(i: number, c: string) {
-        throw new Error("needs implementation");
+        if(i < 0 || i > this.getNoComponents())throw new IllegalArgumentException("invalid index")
+        if(c.length < 1) throw new IllegalArgumentException("invalid Component");
+
+        this.components[i] = c;
     }
 
     public insert(i: number, c: string) {
-        throw new Error("needs implementation");
+        if(i < 0 || i > this.getNoComponents())throw new IllegalArgumentException("invalid index")
+        if(c.length < 1) throw new IllegalArgumentException("invalid Component");
+
+        let first = this.components.slice(0, i) //c soll an Stelle i hinzugefügt werden --> Components bis i erstmal kopieren
+        first.push(c); //c an Stelle i hinzufügen
+        this.components = first.concat(this.components.slice(i, this.getNoComponents())); //rest der Components hinzufügen
     }
 
     public append(c: string) {
-        throw new Error("needs implementation");
+        if(c.length < 1) throw new IllegalArgumentException("invalid Component");
+        this.components.push(c);
     }
 
     public remove(i: number) {
-        throw new Error("needs implementation");
+        if(i < 0 || i > this.getNoComponents())throw new IllegalArgumentException("invalid index")
+        let first = this.components.slice(0, i) //Component an Stelle i soll entfernt werden --> Components bis i erstmal kopieren
+        this.components = first.concat(this.components.slice(i+1, this.getNoComponents())); //i überspringen und Rest kopieren
+
     }
 
     public concat(other: Name): void {
-        throw new Error("needs implementation");
+
+
+        super.concat(other);
+
     }
 }
