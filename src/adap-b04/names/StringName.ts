@@ -2,6 +2,7 @@ import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
 import { Name } from "./Name";
 import { AbstractName } from "./AbstractName";
 import {IllegalArgumentException} from "../common/IllegalArgumentException";
+import {MethodFailureException} from "../common/MethodFailureException";
 
 export class StringName extends AbstractName {
 
@@ -80,6 +81,7 @@ export class StringName extends AbstractName {
                 sol = firstPart+lastPart;
             }
         }
+
         return sol;
     }
 
@@ -87,12 +89,15 @@ export class StringName extends AbstractName {
         if(i > this.getNoComponents() || i<0) throw new IllegalArgumentException("invalid index");
         if(c.length < 1) throw new IllegalArgumentException("invalid component");
         this.insert(i, c);
+        if(this.getComponent(i) != c){
+            throw new MethodFailureException("component not set");
+        }
     }
 
     public insert(i: number, c: string) {
         if(i > this.getNoComponents() || i<0) throw new IllegalArgumentException("invalid index");
         if(c.length < 1) throw new IllegalArgumentException("invalid component");
-
+        var len: number = this.getNoComponents();
         if(i == this.getNoComponents()){
             this.append(c);
             return;
@@ -112,17 +117,28 @@ export class StringName extends AbstractName {
         let lastPart = this.name.substr(j);
         this.name = firstPart+c+ this.getDelimiterCharacter() +lastPart;
         this.noComponents++;
+        if(this.getNoComponents() != len+1){
+            throw new MethodFailureException("not inserted");
+        }
+        if(this.getComponent(i) != c){
+            throw new MethodFailureException("inserted at wrong index");
+        }
     }
 
     public append(c: string) {
         if(c.length < 1) throw new IllegalArgumentException("invalid component");
+        var len: number = this.getNoComponents();
         this.name += this.getDelimiterCharacter();
         this.name += c;
         this.noComponents++;
+        if(this.getNoComponents() != len+1){
+            throw new MethodFailureException("not inserted");
+        }
     }
 
     public remove(i: number) {
         if(i > this.getNoComponents() || i<0) throw new IllegalArgumentException("invalid index");
+        var len: number = this.getNoComponents();
         let k = 0;
         let j = 0;
         while(k < i){
@@ -155,6 +171,9 @@ export class StringName extends AbstractName {
 
         }
         this.noComponents--;
+        if(this.getNoComponents() != len-1){
+            throw new MethodFailureException("not removed");
+        }
 
     }
 

@@ -1,6 +1,7 @@
 import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
 import { Name } from "./Name";
 import {IllegalArgumentException} from "../common/IllegalArgumentException";
+import {InvalidStateException} from "../common/InvalidStateException";
 
 export abstract class AbstractName implements Name {
 
@@ -11,6 +12,10 @@ export abstract class AbstractName implements Name {
             throw new IllegalArgumentException("Delimiter not a char");
         }
         this.delimiter = delimiter;
+
+        if(this.delimiter != delimiter){
+            throw new InvalidStateException("Delimiter nicht gesetzt");
+        }
     }
 
     public clone(): Name {
@@ -19,6 +24,7 @@ export abstract class AbstractName implements Name {
     }
 
     public asString(delimiter: string = this.delimiter): string {
+        var yeet: Name = this;
         if(delimiter.length > 1){
             throw new IllegalArgumentException("Delimiter not a char");
         }
@@ -30,6 +36,11 @@ export abstract class AbstractName implements Name {
         if(sol.length > 0){
             sol = sol.substring(0, sol.length-1);
         }
+
+        if (this != yeet){
+            throw new InvalidStateException("something went wrong");
+        }
+
         return sol;
 
     }
@@ -39,6 +50,7 @@ export abstract class AbstractName implements Name {
     }
 
     public asDataString(): string {
+        var yeet: Name = this;
         let sol = ""
         for(let i = 0; i < this.getNoComponents(); i++){
             sol+= this.getComponent(i);
@@ -46,6 +58,9 @@ export abstract class AbstractName implements Name {
         }
         if(sol.length > 0){
             sol = sol.substring(0, sol.length-1);
+        }
+        if (this != yeet){
+            throw new InvalidStateException("something went wrong");
         }
         return sol;
     }
@@ -58,12 +73,16 @@ export abstract class AbstractName implements Name {
     }
 
     public getHashCode(): number {
+        var yeet: Name = this;
         let hashCode: number = 0;
         const s: string = this.asDataString();
         for (let i = 0; i < s.length; i++) {
             let c = s.charCodeAt(i);
             hashCode = (hashCode << 5) - hashCode + c;
             hashCode |= 0;
+        }
+        if (this != yeet){
+            throw new InvalidStateException("something went wrong");
         }
         return hashCode;
     }
