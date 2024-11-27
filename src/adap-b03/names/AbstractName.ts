@@ -8,20 +8,12 @@ export abstract class AbstractName implements Name {
     constructor(delimiter: string = DEFAULT_DELIMITER) {
         this.delimiter = delimiter;
 
-        //throw new Error("needs implementation");
+    public clone(): Name {
+        throw new Error("needs implementation");
     }
 
     public asString(delimiter: string = this.delimiter): string {
-        let sol = "";
-        for(let i = 0; i < this.getNoComponents(); i++){
-            sol+= this.getComponent(i);
-            sol += this.getDelimiterCharacter();
-        }
-        if(sol.length > 0){
-            sol = sol.substring(0, sol.length-1);
-        }
-        return sol;
-        //throw new Error("needs implementation");
+        throw new Error("needs implementation");
     }
 
     public toString(): string {

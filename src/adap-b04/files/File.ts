@@ -1,7 +1,7 @@
 import { Node } from "./Node";
 import { Directory } from "./Directory";
 import {InvalidStateException} from "../common/InvalidStateException";
-import {MethodFailureException} from "../common/MethodFailureException";
+import { MethodFailedException } from "../common/MethodFailedException";
 
 enum FileState {
     OPEN,
@@ -24,9 +24,14 @@ export class File extends Node {
         this.state = FileState.OPEN;
 
         if(this.doGetFileState() === FileState.CLOSED) {
-            throw new MethodFailureException("File not opened");
+            throw new MethodFailedException("File not opened");
         }
         // do something
+    }
+
+    public read(noBytes: number): Int8Array {
+        // read something
+        return new Int8Array();
     }
 
     public close(): void {
@@ -36,7 +41,7 @@ export class File extends Node {
         this.state = FileState.CLOSED;
 
         if(this.doGetFileState() === FileState.OPEN) {
-            throw new MethodFailureException("File not closed");
+            throw new MethodFailedException("File not closed");
         }
         // do something
     }

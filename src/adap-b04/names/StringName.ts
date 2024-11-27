@@ -2,7 +2,7 @@ import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
 import { Name } from "./Name";
 import { AbstractName } from "./AbstractName";
 import {IllegalArgumentException} from "../common/IllegalArgumentException";
-import {MethodFailureException} from "../common/MethodFailureException";
+import {MethodFailedException} from "../common/MethodFailedException";
 
 export class StringName extends AbstractName {
 
@@ -90,7 +90,7 @@ export class StringName extends AbstractName {
         if(c.length < 1) throw new IllegalArgumentException("invalid component");
         this.insert(i, c);
         if(this.getComponent(i) != c){
-            throw new MethodFailureException("component not set");
+            throw new MethodFailedException("component not set");
         }
     }
 
@@ -118,10 +118,10 @@ export class StringName extends AbstractName {
         this.name = firstPart+c+ this.getDelimiterCharacter() +lastPart;
         this.noComponents++;
         if(this.getNoComponents() != len+1){
-            throw new MethodFailureException("not inserted");
+            throw new MethodFailedException("not inserted");
         }
         if(this.getComponent(i) != c){
-            throw new MethodFailureException("inserted at wrong index");
+            throw new MethodFailedException("inserted at wrong index");
         }
     }
 
@@ -132,7 +132,7 @@ export class StringName extends AbstractName {
         this.name += c;
         this.noComponents++;
         if(this.getNoComponents() != len+1){
-            throw new MethodFailureException("not inserted");
+            throw new MethodFailedException("not inserted");
         }
     }
 
@@ -172,7 +172,7 @@ export class StringName extends AbstractName {
         }
         this.noComponents--;
         if(this.getNoComponents() != len-1){
-            throw new MethodFailureException("not removed");
+            throw new MethodFailedException("not removed");
         }
 
     }

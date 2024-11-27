@@ -2,7 +2,7 @@ import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
 import { Name } from "./Name";
 import { AbstractName } from "./AbstractName";
 import {IllegalArgumentException} from "../common/IllegalArgumentException";
-import {MethodFailureException} from "../common/MethodFailureException";
+import {MethodFailedException} from "../common/MethodFailedException";
 
 export class StringArrayName extends AbstractName {
 
@@ -69,7 +69,7 @@ export class StringArrayName extends AbstractName {
 
         this.components[i] = c;
         if(this.getComponent(i) != c){
-            throw new MethodFailureException("component not set");
+            throw new MethodFailedException("component not set");
         }
     }
 
@@ -81,10 +81,10 @@ export class StringArrayName extends AbstractName {
         first.push(c); //c an Stelle i hinzufügen
         this.components = first.concat(this.components.slice(i, this.getNoComponents())); //rest der Components hinzufügen
         if(this.getNoComponents() != len+1){
-            throw new MethodFailureException("not inserted");
+            throw new MethodFailedException("not inserted");
         }
         if(this.getComponent(i) != c){
-            throw new MethodFailureException("inserted at wrong index");
+            throw new MethodFailedException("inserted at wrong index");
         }
     }
 
@@ -93,7 +93,7 @@ export class StringArrayName extends AbstractName {
         var len: number = this.getNoComponents();
         this.components.push(c);
         if(this.getNoComponents() != len+1){
-            throw new MethodFailureException("not inserted");
+            throw new MethodFailedException("not inserted");
         }
     }
 
@@ -103,7 +103,7 @@ export class StringArrayName extends AbstractName {
         let first = this.components.slice(0, i) //Component an Stelle i soll entfernt werden --> Components bis i erstmal kopieren
         this.components = first.concat(this.components.slice(i+1, this.getNoComponents())); //i überspringen und Rest kopieren
         if(this.getNoComponents() != len-1){
-            throw new MethodFailureException("not removed");
+            throw new MethodFailedException("not removed");
         }
     }
 
