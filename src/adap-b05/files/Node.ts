@@ -58,7 +58,19 @@ export class Node {
      * @param bn basename of node being searched for
      */
     public findNodes(bn: string): Set<Node> {
-        throw new Error("needs implementation or deletion");
+        this.assertIsValidBaseName(bn, 0);
+        let sol: Set<Node> = new Set();
+        if(this.getBaseName() == bn){
+            sol.add(this);
+        }
+        if(this.getParentNode() === null){
+            return sol;
+        }
+        let sol2 = this.getParentNode().findNodes(bn);
+        sol2.forEach(node => sol.add(node));
+        return sol;
+
+        //throw new Error("needs implementation or deletion");
     }
 
     protected assertClassInvariants(): void {
