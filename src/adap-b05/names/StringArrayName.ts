@@ -8,7 +8,7 @@ export class StringArrayName extends AbstractName {
 
     protected components: string[] = [];
 
-    constructor(other: string[], delimiter?: string) {
+    constructor(source: string[], delimiter?: string) {
         super();
         if(other.length > 0 && other[0]!= ""){
             this.components = other;

@@ -52,9 +52,9 @@ export class StringArrayName implements Name {
         if(i > -1 && i < this.getNoComponents()){ //nur gültige Indizes erlauben
             return this.components[i]; //component zurückgeben
 
-            }
+        }
 
-            throw new Error("invalid index"); //falls Index ungültig --> Es kann nichts ausgegeben werden
+        throw new Error("invalid index"); //falls Index ungültig --> Es kann nichts ausgegeben werden
     }
 
     public setComponent(i: number, c: string): void {
@@ -81,17 +81,17 @@ export class StringArrayName implements Name {
         if(i > -1 && i < this.getNoComponents()){
             let first = this.components.slice(0, i) //Component an Stelle i soll entfernt werden --> Components bis i erstmal kopieren
             this.components = first.concat(this.components.slice(i+1, this.getNoComponents())); //i überspringen und Rest kopieren
-            }
-            //throw new Error("invalid index"); //falls Index ungültig --> Es kann nichts geändert werden
+        }
+        //throw new Error("invalid index"); //falls Index ungültig --> Es kann nichts geändert werden
     }
 
     public concat(other: Name): void {
         if(other.isEmpty())return;
         if(other.getDelimiterCharacter() == this.getDelimiterCharacter()){
-        for(let i = 0; i < other.getNoComponents(); i++){
-            this.append(other.getComponent(i));
+            for(let i = 0; i < other.getNoComponents(); i++){
+                this.append(other.getComponent(i));
+            }
         }
-    }
         //throw new Error("needs implementation");
     }
 
