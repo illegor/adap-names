@@ -1,7 +1,7 @@
 import { Node } from "./Node";
 import { Directory } from "./Directory";
 import { MethodFailedException } from "../common/MethodFailedException";
-import {AssertionDispatcher, ExceptionType} from "../common/AssertionDispatcher";
+//import {AssertionDispatcher, ExceptionType} from "../common/AssertionDispatcher";
 import {InvalidStateException} from "../../adap-b04/common/InvalidStateException";
 
 enum FileState {
@@ -19,10 +19,10 @@ export class File extends Node {
     }
 
     public open(): void {
-        this.assertFileOpen(0);
+        //this.assertFileOpen(0);
         this.state = FileState.OPEN;
 
-        this.assertFileClosed(2);
+        //this.assertFileClosed(2);
     }
 
     public read(noBytes: number): Int8Array {
@@ -49,22 +49,22 @@ export class File extends Node {
     }
 
     public close(): void {
-        this.assertFileClosed(0);
+        //this.assertFileClosed(0);
         this.state = FileState.CLOSED;
-        this.assertFileOpen(2);
+        //this.assertFileOpen(2);
     }
 
     protected doGetFileState(): FileState {
         return this.state;
     }
 
-    protected assertFileOpen(et: ExceptionType)  :void {
+    /**protected assertFileOpen(et: ExceptionType)  :void {
         const fs: FileState = this.doGetFileState();
         AssertionDispatcher.dispatch(et,fs == FileState.OPEN,"File already open");
     }
     protected assertFileClosed(et: ExceptionType)  :void {
         const fs: FileState = this.doGetFileState();
         AssertionDispatcher.dispatch(et,fs == FileState.CLOSED,"File already closed");
-    }
+    }**/
 
 }

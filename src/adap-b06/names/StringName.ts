@@ -17,12 +17,22 @@ export class StringName extends AbstractName {
         }
         //if(other.length < 1) throw new IllegalArgumentException("invalid component (const)");
         this.name = source;
+        for (let i = 0; i < this.name.length; i++) {
+            if(this.name[i] == this.getDelimiterCharacter()){
+                this.noComponents++;
+            }
 
+        }
+        if(this.name != "") this.noComponents++;
 
     }
 
     public clone(): Name {
         return super.clone();
+    }
+
+    protected doCreate(): Name {
+        return new StringName(this.name, this.getDelimiterCharacter());
     }
 
     public asString(delimiter: string = this.delimiter): string {
@@ -85,22 +95,22 @@ export class StringName extends AbstractName {
         return sol;
     }
 
-    public setComponent(i: number, c: string) {
+    public setComponent(i: number, c: string): Name {
         if(i > this.getNoComponents() || i<0) throw new IllegalArgumentException("invalid index");
         if(c.length < 1) throw new IllegalArgumentException("invalid component");
-        this.insert(i, c);
-        if(this.getComponent(i) != c){
-            throw new MethodFailedException("component not set");
-        }
+        return this.insert(i, c);
+        //if(this.getComponent(i) != c){
+          //  throw new MethodFailedException("component not set");
+        //}
     }
 
-    public insert(i: number, c: string) {
+    public insert(i: number, c: string): Name {
         if(i > this.getNoComponents() || i<0) throw new IllegalArgumentException("invalid index");
         if(c.length < 1) throw new IllegalArgumentException("invalid component");
         var len: number = this.getNoComponents();
         if(i == this.getNoComponents()){
-            this.append(c);
-            return;
+            return this.append(c);
+
         }
 
         let k = 0;
@@ -113,30 +123,34 @@ export class StringName extends AbstractName {
 
         }
 
+        let newName = this.name;
         let firstPart = this.name.substr(0, j);
         let lastPart = this.name.substr(j);
-        this.name = firstPart+c+ this.getDelimiterCharacter() +lastPart;
-        this.noComponents++;
-        if(this.getNoComponents() != len+1){
-            throw new MethodFailedException("not inserted");
-        }
-        if(this.getComponent(i) != c){
-            throw new MethodFailedException("inserted at wrong index");
-        }
+
+        newName = firstPart+c+ this.getDelimiterCharacter() +lastPart;
+        return new StringName(newName, this.getDelimiterCharacter());
+        //if(this.getNoComponents() != len+1){
+          //  throw new MethodFailedException("not inserted");
+        //}
+        //if(this.getComponent(i) != c){
+          //  throw new MethodFailedException("inserted at wrong index");
+        //}
     }
 
-    public append(c: string) {
+    public append(c: string): Name {
         if(c.length < 1) throw new IllegalArgumentException("invalid component");
         var len: number = this.getNoComponents();
-        this.name += this.getDelimiterCharacter();
-        this.name += c;
-        this.noComponents++;
-        if(this.getNoComponents() != len+1){
-            throw new MethodFailedException("not inserted");
-        }
+        let newName = this.name;
+        newName += this.getDelimiterCharacter();
+        newName += c;
+        //this.noComponents++;
+        return new StringName(newName, this.getDelimiterCharacter());
+        //if(this.getNoComponents() != len+1){
+          //  throw new MethodFailedException("not inserted");
+        //}
     }
 
-    public remove(i: number) {
+    public remove(i: number):Name  {
         if(i > this.getNoComponents() || i<0) throw new IllegalArgumentException("invalid index");
         var len: number = this.getNoComponents();
         let k = 0;
@@ -159,21 +173,23 @@ export class StringName extends AbstractName {
         }
 
 
-
+        let newName: string;
         if(j < this.name.length){
             let lastPart = this.name.substr(j);
-            this.name = firstPart+lastPart;
+            newName = firstPart+lastPart;
         }
-        else this.name = firstPart;
+        else{
+            newName = firstPart;
+        }
         if(i == this.getNoComponents()-1){
-            let newname = this.name.substring(0, this.name.length-1);
-            this.name = newname;
+            newName = this.name.substring(0, this.name.length-1);
+
 
         }
-        this.noComponents--;
-        if(this.getNoComponents() != len-1){
-            throw new MethodFailedException("not removed");
-        }
+        return new StringName(newName, this.getDelimiterCharacter());
+        //if(this.getNoComponents() != len-1){
+          //  throw new MethodFailedException("not removed");
+        //}
 
     }
 
